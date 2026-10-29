@@ -1,0 +1,38 @@
+name: 버그 신고
+description: 동작이 기대와 다를 때
+labels: [bug]
+body:
+  - type: dropdown
+    id: area
+    attributes:
+      label: 영역
+      options: [backend, frontend, infra, docs]
+    validations:
+      required: true
+  - type: textarea
+    id: symptom
+    attributes:
+      label: 증상
+      description: 무엇이 어떻게 잘못됐는지. 에러 메시지나 로그가 있으면 함께 적는다.
+    validations:
+      required: true
+  - type: textarea
+    id: repro
+    attributes:
+      label: 재현 방법
+      placeholder: |
+        1. 
+        2. 
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: 기대 동작
+    validations:
+      required: true
+  - type: input
+    id: env
+    attributes:
+      label: 환경
+      description: 로컬/운영, 커밋 또는 버전
