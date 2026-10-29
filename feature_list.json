@@ -65,8 +65,8 @@
   {
     "id": "F10",
     "name": "PR·이슈 템플릿",
-    "description": "PR 템플릿과 이슈 템플릿을 추가한다.",
-    "status": "pending",
+    "description": "PR 템플릿과 버그 이슈 템플릿을 추가했다. 기능 제안 템플릿과 CONTRIBUTING.md는 두지 않는다.",
+    "status": "completed",
     "dependencies": []
   },
   {
