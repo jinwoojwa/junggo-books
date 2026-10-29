@@ -51,8 +51,8 @@
   {
     "id": "F08",
     "name": "프론트엔드 스캐폴딩",
-    "description": "Next.js(TypeScript) 프로젝트를 만들고 scripts/verify.sh에 연결한다.",
-    "status": "pending",
+    "description": "Next.js(TypeScript, pnpm) 프로젝트를 만들고 scripts/verify.sh와 CI에 연결했다(lint + typecheck + build). 테스트 러너는 구현 때 도입한다. API 클라이언트 타입 생성 방식은 미정.",
+    "status": "completed",
     "dependencies": []
   },
   {
