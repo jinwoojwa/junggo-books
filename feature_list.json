@@ -10,14 +10,14 @@
     "id": "F02",
     "name": "CI(GitHub Actions)",
     "description": "PR과 main push마다 scripts/verify.sh를 실행한다. Java 25와 Docker(Testcontainers)가 필요하다.",
-    "status": "pending",
+    "status": "completed",
     "dependencies": []
   },
   {
     "id": "F03",
     "name": "코드 컨벤션과 정적 분석",
     "description": "Spotless 등 포맷터를 build.gradle에 추가하고 verify에 포함한다.",
-    "status": "pending",
+    "status": "completed",
     "dependencies": []
   },
   {
