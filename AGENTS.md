@@ -19,7 +19,7 @@ cd backend
 ./gradlew build     # 빌드 + 테스트
 ```
 
-변경을 마치기 전에는 루트에서 `scripts/verify.sh`를 실행해 빌드와 테스트가 통과하는지 확인한다.
+변경을 마치기 전에는 루트에서 `scripts/verify.sh`를 실행해 빌드와 테스트가 통과하는지 확인한다. 마이그레이션 테스트가 Testcontainers로 PostgreSQL을 띄우므로 Docker가 실행 중이어야 한다.
 
 - 헬스체크: `http://localhost:8080/actuator/health`, API 문서: `http://localhost:8080/swagger-ui`
 - IDE에서 `main`을 직접 실행할 때는 Working directory를 `backend`로 맞춘다. 아니면 `compose.yaml`을 찾지 못한다.
@@ -32,7 +32,7 @@ cd backend
 
 ## 규칙
 
-- 스키마 변경은 Flyway 마이그레이션(`backend/src/main/resources/db/migration/V{n}__*.sql`)으로만 한다. 이미 적용된 파일은 수정하지 않고 새 버전을 추가한다.
+- 스키마 변경은 Flyway 마이그레이션(`backend/src/main/resources/db/migration/V{n}__*.sql`)으로만 한다. 이미 있는 파일은 수정하지 않고 항상 새 버전을 추가한다. 절차와 SQL 관례는 `add-flyway-migration` Skill을 따른다.
 - 책 식별 기준키는 ISBN13이다. ISBN10은 입력 시 변환한다.
 - 서점별 수집은 어댑터 패턴을 따르고, HTML 파싱은 Jsoup을 우선한다.
 - 책 정보는 국립중앙도서관 서지 API를 사용한다. 연동 설정(환경 변수 이름 등)은 아직 확정 전이다.
