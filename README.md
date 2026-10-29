@@ -11,7 +11,7 @@
 ```
 junggo-books/
 ├── backend/    # Spring Boot 4.1 · Java 25
-├── frontend/   # Next.js (예정)
+├── frontend/   # Next.js (TypeScript)
 └── docs/       # 설계 문서 안내, ADR
 ```
 
