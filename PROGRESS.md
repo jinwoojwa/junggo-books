@@ -17,8 +17,10 @@
 - F03: Spotless(google-java-format AOSP) 도입, 기존 코드 재포맷, `.editorconfig` 추가.
 - F04: ADR-012(컨텍스트별 헥사고널 구조)와 ArchUnit `ArchitectureTest` 추가. JPA 엔티티는 `adapter.out.persistence`에 분리한다.
 - F05: `common.error`에 ErrorCode, CommonErrorCode, BusinessException, GlobalExceptionHandler 추가. 응답은 ProblemDetail + `code`(문자열 상수) + 검증 오류 시 `errors[]`.
+- F07: `CorsConfig`(/api/** GET만, 허용 출처는 환경 변수)와 prod 필수 환경 변수(CORS_ALLOWED_ORIGINS, CRAWLER_USER_AGENT) 기본값 제거 + 검증 테스트.
+- F06(서지 API 연동 설정)은 API 세부가 정해질 때까지 보류.
 - 기반 구축에서 추가할 항목을 정리하고 `feature_list.json`(기반 F, 백엔드 B, 프론트 FE, 배포 D)과 `PROGRESS.md`를 작성했다 (F01).
 
 ## 다음 세션에서 할 일
 
-- 기반 구축 항목을 하나씩 확정하고 진행한다: F06 → F07 → F08 → F09 → F10 → F11.
+- 기반 구축 항목을 하나씩 확정하고 진행한다: F08 → F09 → F10 → F11. F06은 서지 API 세부 확정 후.

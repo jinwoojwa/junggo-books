@@ -44,8 +44,8 @@
   {
     "id": "F07",
     "name": "prod 설정 점검",
-    "description": "시크릿 주입 방식, DB 커넥션 풀, CORS, Actuator 노출 범위를 점검한다.",
-    "status": "pending",
+    "description": "CORS 설정 코드와 prod 필수 환경 변수 검증을 추가했다. Actuator 노출 범위와 Hikari·JVM 메모리 튜닝은 범위에서 제외했다(배포 구성 D01에서 다룬다).",
+    "status": "completed",
     "dependencies": []
   },
   {
