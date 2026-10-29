@@ -1,6 +1,6 @@
 name: 버그 신고
 description: 동작이 기대와 다를 때
-labels: [bug]
+labels: ["🐛 fix"]
 body:
   - type: dropdown
     id: area

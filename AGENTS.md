@@ -47,6 +47,10 @@ cd backend
 - 업무 오류는 `BusinessException(ErrorCode)`로 던진다. 컨텍스트별 코드는 `common.error.ErrorCode`를 구현한 enum으로 정의하고, 한 번 정한 코드 문자열은 바꾸지 않는다.
 - 처리되지 않은 예외는 내부 정보 없이 500 `INTERNAL_ERROR`로 내려간다. 응답 변환은 `GlobalExceptionHandler`가 맡는다.
 
+## 라벨
+
+커밋 type과 같은 이름의 라벨을 쓴다: ✨ feat, 🐛 fix, ♻️ refactor, ✅ test, 📝 docs, 🔧 chore, ⚡ perf, 📦 dependencies (Dependabot PR). 라벨 이름은 이모지를 포함해서 참조한다 (이슈 폼, `dependabot.yml`).
+
 ## Git hook
 
 clone 후 `scripts/setup-hooks.sh`를 한 번 실행해 `.githooks/`를 활성화한다.
