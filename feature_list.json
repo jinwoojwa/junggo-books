@@ -1,0 +1,226 @@
+[
+  {
+    "id": "F01",
+    "name": "작업 추적 파일 구성",
+    "description": "feature_list.json과 PROGRESS.md를 만들어 세션 간 맥락을 유지한다.",
+    "status": "completed",
+    "dependencies": []
+  },
+  {
+    "id": "F02",
+    "name": "CI(GitHub Actions)",
+    "description": "PR과 main push마다 scripts/verify.sh를 실행한다. Java 25와 Docker(Testcontainers)가 필요하다.",
+    "status": "pending",
+    "dependencies": []
+  },
+  {
+    "id": "F03",
+    "name": "코드 컨벤션과 정적 분석",
+    "description": "Spotless 등 포맷터를 build.gradle에 추가하고 verify에 포함한다.",
+    "status": "pending",
+    "dependencies": []
+  },
+  {
+    "id": "F04",
+    "name": "패키지 구조 가이드",
+    "description": "패키지 구조와 계층 규칙을 ADR 또는 AGENTS.md에 기록한다. ADR-002의 어댑터 모듈 분리 가능성을 고려한다.",
+    "status": "pending",
+    "dependencies": []
+  },
+  {
+    "id": "F05",
+    "name": "공통 예외·응답 규약",
+    "description": "@RestControllerAdvice, 에러 응답 포맷, 에러 코드 체계를 정한다. API 명세서의 에러 코드와 맞춘다.",
+    "status": "pending",
+    "dependencies": ["F04"]
+  },
+  {
+    "id": "F06",
+    "name": "서지 API 연동 설정 확정",
+    "description": "국립중앙도서관 서지 API의 환경 변수 이름, 타임아웃, 재시도 기준을 정하고 .env.example, application-prod.yml, AGENTS.md에 반영한다.",
+    "status": "pending",
+    "dependencies": []
+  },
+  {
+    "id": "F07",
+    "name": "prod 설정 점검",
+    "description": "시크릿 주입 방식, DB 커넥션 풀, CORS, Actuator 노출 범위를 점검한다.",
+    "status": "pending",
+    "dependencies": []
+  },
+  {
+    "id": "F08",
+    "name": "프론트엔드 스캐폴딩",
+    "description": "Next.js(TypeScript) 프로젝트를 만들고 scripts/verify.sh에 연결한다.",
+    "status": "pending",
+    "dependencies": []
+  },
+  {
+    "id": "F09",
+    "name": "의존성 자동 업데이트",
+    "description": "Dependabot 또는 Renovate를 설정한다(Gradle, GitHub Actions, npm).",
+    "status": "pending",
+    "dependencies": ["F02"]
+  },
+  {
+    "id": "F10",
+    "name": "PR·이슈 템플릿",
+    "description": "PR 템플릿과 이슈 템플릿을 추가한다.",
+    "status": "pending",
+    "dependencies": []
+  },
+  {
+    "id": "F11",
+    "name": "Git hook",
+    "description": "pre-commit에서 포맷 검사 또는 verify를 실행한다.",
+    "status": "pending",
+    "dependencies": ["F03"]
+  },
+  {
+    "id": "B01",
+    "name": "Book 엔티티·리포지토리",
+    "description": "book 테이블(V1)에 대응하는 JPA 엔티티와 리포지토리.",
+    "status": "pending",
+    "dependencies": ["F04"]
+  },
+  {
+    "id": "B02",
+    "name": "ISBN 유틸",
+    "description": "ISBN 검증과 ISBN10 → ISBN13 변환(ADR-003).",
+    "status": "pending",
+    "dependencies": []
+  },
+  {
+    "id": "B03",
+    "name": "서지 API 클라이언트",
+    "description": "국립중앙도서관 서지 API 호출과 응답 매핑(ADR-004).",
+    "status": "pending",
+    "dependencies": ["F06"]
+  },
+  {
+    "id": "B04",
+    "name": "책 검색 API",
+    "description": "키워드 검색으로 판 목록을 돌려준다. 사용자가 판을 골라 ISBN13을 확정한다.",
+    "status": "pending",
+    "dependencies": ["B02", "B03", "F05"]
+  },
+  {
+    "id": "B05",
+    "name": "책 저장과 30일 갱신",
+    "description": "가격 비교 화면에서 연 책만 저장하고, updated_at이 30일 지나면 도서 API로 갱신한다.",
+    "status": "pending",
+    "dependencies": ["B01", "B03"]
+  },
+  {
+    "id": "B06",
+    "name": "StoreAdapter 인터페이스",
+    "description": "StoreAdapter 인터페이스와 공통 모델(가격, 배송비, 상태, 링크, 조회 결과 상태)을 정의한다(ADR-005).",
+    "status": "pending",
+    "dependencies": ["F04"]
+  },
+  {
+    "id": "B07",
+    "name": "알라딘 어댑터",
+    "description": "알라딘 중고와 이 광활한 우주점 조회. 가져오기와 파싱을 분리하고 파서는 저장한 HTML로 테스트한다.",
+    "status": "pending",
+    "dependencies": ["B06"]
+  },
+  {
+    "id": "B08",
+    "name": "YES24 어댑터",
+    "description": "YES24 직접 판매 중고 조회.",
+    "status": "pending",
+    "dependencies": ["B06"]
+  },
+  {
+    "id": "B09",
+    "name": "가격 비교 서비스",
+    "description": "List<StoreAdapter>를 병렬 실행하고 배송비 포함 총액으로 정렬한다. 한 서점 장애가 다른 서점에 번지지 않게 한다.",
+    "status": "pending",
+    "dependencies": ["B06", "B07"]
+  },
+  {
+    "id": "B10",
+    "name": "서점 조회 캐시",
+    "description": "Caffeine 캐시. 키는 {isbn13}:{store}, 정상 결과 3시간, 실패·빈 결과 10분(ADR-007).",
+    "status": "pending",
+    "dependencies": ["B09"]
+  },
+  {
+    "id": "B11",
+    "name": "가격 비교 API",
+    "description": "/api/v1 가격 비교 엔드포인트와 OpenAPI 문서.",
+    "status": "pending",
+    "dependencies": ["B05", "B09", "F05"]
+  },
+  {
+    "id": "B12",
+    "name": "일별 최저가 기록과 추이 API",
+    "description": "daily_lowest_price(V3)에 책·날짜·서점별 최저가를 쌓고 추이를 조회한다.",
+    "status": "pending",
+    "dependencies": ["B09"]
+  },
+  {
+    "id": "B13",
+    "name": "검색·수집 로그",
+    "description": "logs 테이블(V2)에 검색과 서점 조회 결과를 기록한다.",
+    "status": "pending",
+    "dependencies": ["B09"]
+  },
+  {
+    "id": "B14",
+    "name": "요청 제한",
+    "description": "API 명세서의 요청 제한과 서점별 요청 간격 제한을 적용한다.",
+    "status": "pending",
+    "dependencies": ["B11"]
+  },
+  {
+    "id": "FE01",
+    "name": "검색·판 선택 화면",
+    "description": "기능 명세서 S-01~S-04 중 검색과 판 선택 화면.",
+    "status": "pending",
+    "dependencies": ["F08", "B04"]
+  },
+  {
+    "id": "FE02",
+    "name": "가격 비교 화면",
+    "description": "배송비 포함 총액 비교와 서점 링크 연결, 조회 결과 상태 표시.",
+    "status": "pending",
+    "dependencies": ["F08", "B11"]
+  },
+  {
+    "id": "FE03",
+    "name": "최저가 추이 화면",
+    "description": "일별 최저가 추이 표시.",
+    "status": "pending",
+    "dependencies": ["F08", "B12"]
+  },
+  {
+    "id": "D01",
+    "name": "운영 Docker Compose 구성",
+    "description": "Caddy, Spring Boot, PostgreSQL 구성과 힙 크기 설정(ADR-010).",
+    "status": "pending",
+    "dependencies": ["F07"]
+  },
+  {
+    "id": "D02",
+    "name": "CD 파이프라인",
+    "description": "GitHub Actions → Artifact Registry → VM 배포. 비밀값은 GitHub Secrets에서 VM의 .env로 생성한다.",
+    "status": "pending",
+    "dependencies": ["F02", "D01"]
+  },
+  {
+    "id": "D03",
+    "name": "DB 백업",
+    "description": "매일 pg_dump → Cloud Storage, 7일 보관.",
+    "status": "pending",
+    "dependencies": ["D01"]
+  },
+  {
+    "id": "D04",
+    "name": "알림·모니터링",
+    "description": "배포·운영 설계 문서에 따른 알림 설정.",
+    "status": "pending",
+    "dependencies": ["D01"]
+  }
+]
