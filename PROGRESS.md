@@ -20,8 +20,9 @@
 - F07: `CorsConfig`(/api/** GET만, 허용 출처는 환경 변수)와 prod 필수 환경 변수(CORS_ALLOWED_ORIGINS, CRAWLER_USER_AGENT) 기본값 제거 + 검증 테스트.
 - F06(서지 API 연동 설정)은 API 세부가 정해질 때까지 보류.
 - F08: `frontend/`에 Next.js 스캐폴딩(Tailwind 제외, `typecheck` 스크립트 추가, Node 24), verify.sh·CI에 frontend 단계 연동.
+- F09: Dependabot 설정(주 1회 월요일, 생태계별 minor/patch 묶음, PR 제목 `chore(deps)`).
 - 기반 구축에서 추가할 항목을 정리하고 `feature_list.json`(기반 F, 백엔드 B, 프론트 FE, 배포 D)과 `PROGRESS.md`를 작성했다 (F01).
 
 ## 다음 세션에서 할 일
 
-- 기반 구축 항목을 하나씩 확정하고 진행한다: F09 → F10 → F11. F06은 서지 API 세부 확정 후.
+- 기반 구축 항목을 하나씩 확정하고 진행한다: F10 → F11. F06은 서지 API 세부 확정 후.
