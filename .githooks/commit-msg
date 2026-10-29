@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+# 커밋 제목이 Conventional Commits 형식인지 검사한다: <type>(<scope>): <description>
+set -euo pipefail
+
+subject="$(head -n 1 "$1")"
+
+# 머지·되돌리기·fixup 같은 git 자동 생성 제목은 통과시킨다
+if [[ "$subject" =~ ^(Merge|Revert|fixup!|squash!) ]]; then
+  exit 0
+fi
+
+pattern='^(feat|fix|refactor|test|docs|chore|perf)(\([a-z0-9._/-]+\))?: .+'
+if [[ ! "$subject" =~ $pattern ]]; then
+  echo "커밋 제목 형식 오류: $subject" >&2
+  echo "형식: <type>(<scope>): <description>  (type: feat|fix|refactor|test|docs|chore|perf)" >&2
+  exit 1
+fi
+
+if [[ "$subject" =~ [.!?。]$ ]]; then
+  echo "커밋 제목 끝에는 마침표나 구두점을 넣지 않습니다: $subject" >&2
+  exit 1
+fi

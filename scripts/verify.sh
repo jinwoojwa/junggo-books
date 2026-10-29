@@ -5,6 +5,9 @@ set -euo pipefail
 
 cd "$(dirname "$0")/.."
 
+echo "==> hooks: commit-msg 검사"
+scripts/test-hooks.sh
+
 echo "==> backend: ./gradlew build"
 (cd backend && ./gradlew build)
 
