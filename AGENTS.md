@@ -39,6 +39,12 @@ cd backend
 - 서점별 수집은 어댑터 패턴을 따르고, HTML 파싱은 Jsoup을 우선한다.
 - 책 정보는 국립중앙도서관 서지 API를 사용한다. 연동 설정(환경 변수 이름 등)은 아직 확정 전이다.
 
+## 에러 응답
+
+- 모든 에러 응답은 RFC 9457 `ProblemDetail`이고 `code` 확장 필드(대문자 스네이크 케이스 문자열)를 항상 포함한다. 검증 실패는 `errors[]`(field, message)를 더한다.
+- 업무 오류는 `BusinessException(ErrorCode)`로 던진다. 컨텍스트별 코드는 `common.error.ErrorCode`를 구현한 enum으로 정의하고, 한 번 정한 코드 문자열은 바꾸지 않는다.
+- 처리되지 않은 예외는 내부 정보 없이 500 `INTERNAL_ERROR`로 내려간다. 응답 변환은 `GlobalExceptionHandler`가 맡는다.
+
 ## 브랜치와 머지
 
 - `main`에 직접 커밋하지 않는다. 작업마다 `feat/*`, `fix/*`, `chore/*`, `docs/*` 같은 타입별 브랜치를 만들어 PR로 머지한다.

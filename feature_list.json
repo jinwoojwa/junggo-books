@@ -30,8 +30,8 @@
   {
     "id": "F05",
     "name": "공통 예외·응답 규약",
-    "description": "@RestControllerAdvice, 에러 응답 포맷, 에러 코드 체계를 정한다. API 명세서의 에러 코드와 맞춘다.",
-    "status": "pending",
+    "description": "@RestControllerAdvice, 에러 응답 포맷, 에러 코드 체계를 정한다. ProblemDetail(RFC 9457) + code 확장 필드, 문자열 상수 코드. CommonErrorCode가 API 명세서의 에러 코드 표와 맞는지 확인이 남아 있다.",
+    "status": "completed",
     "dependencies": ["F04"]
   },
   {
