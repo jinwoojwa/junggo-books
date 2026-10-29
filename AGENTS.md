@@ -51,6 +51,8 @@ cd backend
 
 커밋 type과 같은 이름의 라벨을 쓴다: ✨ feat, 🐛 fix, ♻️ refactor, ✅ test, 📝 docs, 🔧 chore, ⚡ perf, 📦 dependencies (Dependabot PR). 라벨 이름은 이모지를 포함해서 참조한다 (이슈 폼, `dependabot.yml`).
 
+PR을 열거나 제목을 고치면 `.github/workflows/triage.yml`이 제목의 type으로 라벨을 붙이고(기존 type 라벨은 교체), 담당자가 없으면 PR 작성자를 지정한다. 이슈는 저장소 소유자를 담당자로 지정한다. Dependabot PR은 `dependabot.yml`이 라벨과 담당자를 지정한다.
+
 ## Git hook
 
 clone 후 `scripts/setup-hooks.sh`를 한 번 실행해 `.githooks/`를 활성화한다.

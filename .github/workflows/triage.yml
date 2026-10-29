@@ -1,0 +1,71 @@
+name: Triage
+
+# PR 제목의 Conventional Commits type으로 라벨을 붙이고, PR과 이슈에 담당자를 지정한다.
+on:
+  pull_request:
+    types: [opened, edited, reopened]
+  issues:
+    types: [opened]
+
+permissions:
+  contents: read
+  issues: write
+  pull-requests: write
+
+jobs:
+  triage:
+    # Dependabot PR은 토큰이 읽기 전용이다. 라벨과 담당자는 dependabot.yml에서 지정한다.
+    if: github.actor != 'dependabot[bot]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/github-script@v9
+        with:
+          script: |
+            const typeLabels = {
+              feat: '✨ feat',
+              fix: '🐛 fix',
+              refactor: '♻️ refactor',
+              test: '✅ test',
+              docs: '📝 docs',
+              chore: '🔧 chore',
+              perf: '⚡ perf',
+            };
+            const { owner, repo } = context.repo;
+
+            if (context.eventName === 'issues') {
+              const issue = context.payload.issue;
+              await github.rest.issues.addAssignees({
+                owner, repo, issue_number: issue.number, assignees: [owner],
+              });
+              return;
+            }
+
+            const pr = context.payload.pull_request;
+            const match = pr.title.match(/^(\w+)(\([^)]*\))?!?:/);
+            const label = match && typeLabels[match[1]];
+
+            if (label) {
+              // 제목이 바뀌었을 수 있으므로 기존 type 라벨을 걷어내고 하나만 남긴다
+              const current = pr.labels.map((l) => l.name);
+              for (const name of current) {
+                if (name !== label && Object.values(typeLabels).includes(name)) {
+                  await github.rest.issues.removeLabel({
+                    owner, repo, issue_number: pr.number, name,
+                  });
+                }
+              }
+              if (!current.includes(label)) {
+                await github.rest.issues.addLabels({
+                  owner, repo, issue_number: pr.number, labels: [label],
+                });
+              }
+            } else {
+              core.warning(`PR 제목이 Conventional Commits 형식이 아닙니다: ${pr.title}`);
+            }
+
+            if (pr.assignees.length === 0) {
+              await github.rest.issues.addAssignees({
+                owner, repo, issue_number: pr.number, assignees: [pr.user.login],
+              });
+            }
