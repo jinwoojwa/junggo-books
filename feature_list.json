@@ -58,8 +58,8 @@
   {
     "id": "F09",
     "name": "의존성 자동 업데이트",
-    "description": "Dependabot 또는 Renovate를 설정한다(Gradle, GitHub Actions, npm).",
-    "status": "pending",
+    "description": "Dependabot을 설정했다(Gradle, npm, GitHub Actions). 매주 월요일, 생태계별 minor/patch 묶음.",
+    "status": "completed",
     "dependencies": ["F02"]
   },
   {
