@@ -23,8 +23,8 @@
   {
     "id": "F04",
     "name": "패키지 구조 가이드",
-    "description": "패키지 구조와 계층 규칙을 ADR 또는 AGENTS.md에 기록한다. ADR-002의 어댑터 모듈 분리 가능성을 고려한다.",
-    "status": "pending",
+    "description": "컨텍스트별 헥사고널 패키지 구조와 의존 규칙을 ADR-012에 기록하고 ArchUnit으로 강제한다.",
+    "status": "completed",
     "dependencies": []
   },
   {
