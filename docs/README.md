@@ -32,3 +32,12 @@
 | [009](adr/009-cloud-sql-flyway.md) | DB는 Cloud SQL PostgreSQL, 스키마는 Flyway로 관리한다 | 대체됨 → 010 |
 | [010](adr/010-single-vm-docker-compose.md) | 백엔드·DB는 Compute Engine VM 한 대에 Docker Compose로 운영한다 | 채택 |
 | [011](adr/011-java-25-spring-boot-4-1.md) | Java 25와 Spring Boot 4.1을 쓴다 | 채택 |
+
+## 트러블슈팅
+
+겪은 문제의 증상·원인·해결·재발 방지를 남깁니다. 같은 문제를 다시 만났을 때 먼저 여기를 찾아봅니다. 새 기록은 [template.md](troubleshooting/template.md)를 복사해 `NNN-slug.md`로 쓰고, 아래 표에 추가합니다.
+
+| 번호 | 문제 | 영역 |
+| --- | --- | --- |
+| [001](troubleshooting/001-yaml-colon-in-default-value.md) | application.yml 기본값의 콜론 때문에 부트런이 실패한다 | backend |
+| [002](troubleshooting/002-ide-working-directory-compose-yaml.md) | IDE에서 실행하면 compose.yaml을 찾지 못한다 | backend |
