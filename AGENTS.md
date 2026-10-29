@@ -19,6 +19,8 @@ cd backend
 ./gradlew build     # 빌드 + 테스트
 ```
 
+변경을 마치기 전에는 루트에서 `scripts/verify.sh`를 실행해 빌드와 테스트가 통과하는지 확인한다.
+
 - 헬스체크: `http://localhost:8080/actuator/health`, API 문서: `http://localhost:8080/swagger-ui`
 - IDE에서 `main`을 직접 실행할 때는 Working directory를 `backend`로 맞춘다. 아니면 `compose.yaml`을 찾지 못한다.
 
