@@ -34,6 +34,7 @@ cd backend
 ## 규칙
 
 - 스키마 변경은 Flyway 마이그레이션(`backend/src/main/resources/db/migration/V{n}__*.sql`)으로만 한다. 이미 있는 파일은 수정하지 않고 항상 새 버전을 추가한다. 절차와 SQL 관례는 `add-flyway-migration` Skill을 따른다.
+- 패키지는 `book`·`price` 컨텍스트별 헥사고널 구조(`domain` / `application` / `adapter`)를 따른다. 상세와 의존 규칙은 ADR-012, 검사는 `ArchitectureTest`.
 - 책 식별 기준키는 ISBN13이다. ISBN10은 입력 시 변환한다.
 - 서점별 수집은 어댑터 패턴을 따르고, HTML 파싱은 Jsoup을 우선한다.
 - 책 정보는 국립중앙도서관 서지 API를 사용한다. 연동 설정(환경 변수 이름 등)은 아직 확정 전이다.

@@ -32,6 +32,7 @@
 | [009](adr/009-cloud-sql-flyway.md) | DB는 Cloud SQL PostgreSQL, 스키마는 Flyway로 관리한다 | 대체됨 → 010 |
 | [010](adr/010-single-vm-docker-compose.md) | 백엔드·DB는 Compute Engine VM 한 대에 Docker Compose로 운영한다 | 채택 |
 | [011](adr/011-java-25-spring-boot-4-1.md) | Java 25와 Spring Boot 4.1을 쓴다 | 채택 |
+| [012](adr/012-hexagonal-package-structure.md) | 패키지는 컨텍스트별 헥사고널 구조로 나누고 ArchUnit으로 강제한다 | 채택 |
 
 ## 트러블슈팅
 
