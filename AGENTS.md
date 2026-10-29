@@ -16,7 +16,8 @@
 cd backend
 ./gradlew bootRun   # 서버 실행. compose.yaml의 PostgreSQL을 자동으로 띄운다 (Docker 필요)
 ./gradlew test      # 테스트
-./gradlew build     # 빌드 + 테스트
+./gradlew build     # 빌드 + 테스트 + 포맷 검사(spotlessCheck)
+./gradlew spotlessApply  # 포맷 자동 정리 (google-java-format AOSP: 4칸, 100자)
 ```
 
 변경을 마치기 전에는 루트에서 `scripts/verify.sh`를 실행해 빌드와 테스트가 통과하는지 확인한다. 마이그레이션 테스트가 Testcontainers로 PostgreSQL을 띄우므로 Docker가 실행 중이어야 한다.
