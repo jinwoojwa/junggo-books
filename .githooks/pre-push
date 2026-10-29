@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+# 푸시 전에 전체 검증을 돌린다. 급할 때는 git push --no-verify (CI가 다시 검사한다).
+set -euo pipefail
+
+cd "$(git rev-parse --show-toplevel)"
+scripts/verify.sh

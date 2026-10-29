@@ -47,6 +47,14 @@ cd backend
 - 업무 오류는 `BusinessException(ErrorCode)`로 던진다. 컨텍스트별 코드는 `common.error.ErrorCode`를 구현한 enum으로 정의하고, 한 번 정한 코드 문자열은 바꾸지 않는다.
 - 처리되지 않은 예외는 내부 정보 없이 500 `INTERNAL_ERROR`로 내려간다. 응답 변환은 `GlobalExceptionHandler`가 맡는다.
 
+## Git hook
+
+clone 후 `scripts/setup-hooks.sh`를 한 번 실행해 `.githooks/`를 활성화한다.
+
+- `pre-commit`: 스테이지된 Java 파일의 포맷(Spotless)만 검사한다.
+- `commit-msg`: 제목이 Conventional Commits 형식인지, 끝에 구두점이 없는지 검사한다 (`scripts/test-hooks.sh`로 테스트).
+- `pre-push`: `scripts/verify.sh` 전체를 실행한다. 급할 때만 `--no-verify`를 쓰고, CI가 어차피 다시 검사한다.
+
 ## 브랜치와 머지
 
 - `main`에 직접 커밋하지 않는다. 작업마다 `feat/*`, `fix/*`, `chore/*`, `docs/*` 같은 타입별 브랜치를 만들어 PR로 머지한다.
