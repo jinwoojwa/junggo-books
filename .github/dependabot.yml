@@ -10,6 +10,7 @@ updates:
       day: monday
       timezone: Asia/Seoul
     labels: ["📦 dependencies"]
+    assignees: ["jinwoojwa"]
     commit-message:
       prefix: "chore(deps)"
     groups:
@@ -23,6 +24,7 @@ updates:
       day: monday
       timezone: Asia/Seoul
     labels: ["📦 dependencies"]
+    assignees: ["jinwoojwa"]
     commit-message:
       prefix: "chore(deps)"
     groups:
@@ -36,6 +38,7 @@ updates:
       day: monday
       timezone: Asia/Seoul
     labels: ["📦 dependencies"]
+    assignees: ["jinwoojwa"]
     commit-message:
       prefix: "chore(deps)"
     groups:
