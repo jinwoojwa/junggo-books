@@ -2,6 +2,7 @@ plugins {
 	id 'java'
 	id 'org.springframework.boot' version '4.1.2'
 	id 'io.spring.dependency-management' version '1.1.7'
+	id 'com.diffplug.spotless' version '8.0.0'
 }
 
 group = 'com.junggobooks'
@@ -48,6 +49,15 @@ dependencies {
 	testImplementation 'org.testcontainers:testcontainers-junit-jupiter'
 	testImplementation 'org.testcontainers:testcontainers-postgresql'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+// 포맷: google-java-format AOSP 스타일(들여쓰기 4칸, 100자). 위반은 ./gradlew spotlessApply 로 고친다.
+spotless {
+	java {
+		googleJavaFormat().aosp()
+		removeUnusedImports()
+		endWithNewline()
+	}
 }
 
 tasks.named('test') {
