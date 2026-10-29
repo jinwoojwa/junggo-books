@@ -5,7 +5,7 @@
 ## 구조
 
 - `backend/` — Spring Boot 4.1 · Java 25 (Gradle). 빌드 파일은 이 디렉터리에 있다.
-- `frontend/` — Next.js (예정, 아직 없음)
+- `frontend/` — Next.js 16 · App Router · TypeScript (pnpm)
 - `docs/` — 설계 문서 안내와 ADR (`docs/adr/`)
 
 ## 명령어
@@ -20,7 +20,9 @@ cd backend
 ./gradlew spotlessApply  # 포맷 자동 정리 (google-java-format AOSP: 4칸, 100자)
 ```
 
-변경을 마치기 전에는 루트에서 `scripts/verify.sh`를 실행해 빌드와 테스트가 통과하는지 확인한다. 마이그레이션 테스트가 Testcontainers로 PostgreSQL을 띄우므로 Docker가 실행 중이어야 한다.
+프론트엔드 명령은 `frontend/`에서 `corepack pnpm <script>`로 실행한다(`dev`, `lint`, `typecheck`, `build`). pnpm 버전은 `package.json`의 `packageManager`가 정한다.
+
+변경을 마치기 전에는 루트에서 `scripts/verify.sh`를 실행해 백엔드 빌드·테스트와 프론트엔드 lint·typecheck·build가 통과하는지 확인한다. 마이그레이션 테스트가 Testcontainers로 PostgreSQL을 띄우므로 Docker가 실행 중이어야 한다.
 
 - 헬스체크: `http://localhost:8080/actuator/health`, API 문서: `http://localhost:8080/swagger-ui`
 - IDE에서 `main`을 직접 실행할 때는 Working directory를 `backend`로 맞춘다. 아니면 `compose.yaml`을 찾지 못한다.
