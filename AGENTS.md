@@ -37,6 +37,12 @@ cd backend
 - 서점별 수집은 어댑터 패턴을 따르고, HTML 파싱은 Jsoup을 우선한다.
 - 책 정보는 국립중앙도서관 서지 API를 사용한다. 연동 설정(환경 변수 이름 등)은 아직 확정 전이다.
 
+## 브랜치와 머지
+
+- `main`에 직접 커밋하지 않는다. 작업마다 `feat/*`, `fix/*`, `chore/*`, `docs/*` 같은 타입별 브랜치를 만들어 PR로 머지한다.
+- 머지는 squash merge만 쓴다. PR 제목을 Conventional Commits 형식으로 쓰면 그대로 커밋 메시지가 된다.
+- CI(`.github/workflows/ci.yml`)가 PR과 `main` push마다 `scripts/verify.sh`를 실행한다. 통과해야 머지한다.
+
 ## 문서
 
 - 설계 결정은 `docs/adr/`에 ADR로 남긴다. 결정을 바꿀 때는 기존 기록을 지우지 않고 상태를 "대체됨"으로 바꾼 뒤 새 기록을 추가한다 (`docs/adr/template.md`).
