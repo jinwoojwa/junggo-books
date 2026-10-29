@@ -1,0 +1,13 @@
+# 운영(VM의 Docker Compose)용. 값은 VM의 .env에서 주입한다.
+spring:
+  datasource:
+    url: jdbc:postgresql://${DB_HOST:db}:${DB_PORT:5432}/${DB_NAME}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+    hikari:
+      maximum-pool-size: 5
+
+logging:
+  structured:
+    format:
+      console: ecs

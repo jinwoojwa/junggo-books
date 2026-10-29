@@ -1,0 +1,6 @@
+plugins {
+	// Java 25 툴체인이 로컬에 없으면 자동으로 내려받는다
+	id 'org.gradle.toolchains.foojay-resolver-convention' version '1.0.0'
+}
+
+rootProject.name = 'junggo-books'

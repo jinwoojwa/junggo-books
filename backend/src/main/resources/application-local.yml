@@ -1,0 +1,13 @@
+# 로컬 개발용.
+# DB 접속 정보는 spring-boot-docker-compose가 compose.yaml의 PostgreSQL 컨테이너에서 자동으로 연결한다.
+spring:
+  docker:
+    compose:
+      file: compose.yaml
+      lifecycle-management: start-only
+  jpa:
+    show-sql: false
+
+logging:
+  level:
+    com.junggobooks: debug
