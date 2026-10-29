@@ -11,3 +11,10 @@ logging:
   structured:
     format:
       console: ecs
+
+# 운영에서는 기본값 없이 환경 변수를 받는다. 비어 있으면 기동 시 바인딩에서 실패한다.
+app:
+  cors:
+    allowed-origins: ${CORS_ALLOWED_ORIGINS}
+  crawler:
+    user-agent: "${CRAWLER_USER_AGENT}"
