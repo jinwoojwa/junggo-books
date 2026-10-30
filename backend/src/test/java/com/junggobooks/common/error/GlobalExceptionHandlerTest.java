@@ -1,5 +1,6 @@
 package com.junggobooks.common.error;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -10,7 +11,8 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.http.HttpStatus;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -91,6 +93,20 @@ class GlobalExceptionHandlerTest {
                 .andExpect(jsonPath("$.detail").value("서버 오류가 발생했습니다."));
     }
 
+    @ParameterizedTest
+    @CsvSource({
+        "VALIDATION, 400",
+        "NOT_FOUND, 404",
+        "METHOD_NOT_ALLOWED, 405",
+        "UNSUPPORTED_MEDIA_TYPE, 415",
+        "TOO_MANY_REQUESTS, 429",
+        "UPSTREAM, 502",
+        "INTERNAL, 500"
+    })
+    void 에러_종류는_HTTP_상태로_변환된다(ErrorType type, int status) {
+        assertThat(GlobalExceptionHandler.toStatus(type).value()).isEqualTo(status);
+    }
+
     enum TestErrorCode implements ErrorCode {
         BOOK_NOT_FOUND;
 
@@ -100,8 +116,8 @@ class GlobalExceptionHandlerTest {
         }
 
         @Override
-        public HttpStatus status() {
-            return HttpStatus.NOT_FOUND;
+        public ErrorType type() {
+            return ErrorType.NOT_FOUND;
         }
 
         @Override

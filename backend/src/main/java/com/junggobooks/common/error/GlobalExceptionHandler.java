@@ -30,7 +30,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(BusinessException.class)
     ProblemDetail handleBusiness(BusinessException e) {
         ErrorCode errorCode = e.errorCode();
-        if (errorCode.status().is5xxServerError()) {
+        if (toStatus(errorCode.type()).is5xxServerError()) {
             log.error("업무 예외: {}", errorCode.code(), e);
         }
         return problem(errorCode, e.getMessage());
@@ -91,9 +91,23 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     private static ProblemDetail problem(ErrorCode errorCode, String detail) {
         ProblemDetail problem =
                 ProblemDetail.forStatusAndDetail(
-                        errorCode.status(), detail != null ? detail : errorCode.defaultMessage());
+                        toStatus(errorCode.type()),
+                        detail != null ? detail : errorCode.defaultMessage());
         problem.setProperty("code", errorCode.code());
         return problem;
+    }
+
+    /** 에러 종류를 HTTP 상태로 바꾸는 유일한 곳. */
+    static HttpStatus toStatus(ErrorType type) {
+        return switch (type) {
+            case VALIDATION -> HttpStatus.BAD_REQUEST;
+            case NOT_FOUND -> HttpStatus.NOT_FOUND;
+            case METHOD_NOT_ALLOWED -> HttpStatus.METHOD_NOT_ALLOWED;
+            case UNSUPPORTED_MEDIA_TYPE -> HttpStatus.UNSUPPORTED_MEDIA_TYPE;
+            case TOO_MANY_REQUESTS -> HttpStatus.TOO_MANY_REQUESTS;
+            case UPSTREAM -> HttpStatus.BAD_GATEWAY;
+            case INTERNAL -> HttpStatus.INTERNAL_SERVER_ERROR;
+        };
     }
 
     private static Map<String, String> toError(FieldError error) {
