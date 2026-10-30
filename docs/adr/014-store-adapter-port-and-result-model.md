@@ -1,6 +1,6 @@
 # ADR-014 StoreAdapter 포트는 매물 목록을 돌려주고, 조회 결과 상태는 StoreResult로 분리한다
 
-- 상태: 제안
+- 상태: 채택
 - 날짜: 2026-10-30
 
 ## 맥락
@@ -29,15 +29,16 @@ ADR-005가 서점별 `StoreAdapter`를 `List<StoreAdapter>`로 병렬 실행하�
 
 ### 모델
 
-`price.domain`에 둔다. 이름은 구현 때 확정한다.
+`price.domain` 아래에 둔다. enum은 `enums`, 값 객체는 `vo`, 규칙 위반 예외는 `exception`이다.
 
-- `Store`: `ALADIN`, `YES24`.
-- `Condition`: `BEST`, `GOOD`, `FAIR`, `POOR`, `UNKNOWN`.
-- `Offer`: 실제로 존재하는 매물 하나. 가격(원, `int`), 배송비(원, `int`), `Condition`, 서점 원문 상태 라벨, 상품 링크를 갖는다. 조회 상태 필드는 없다. 총액은 값을 따로 들지 않고 `price + shippingFee`로 계산한다.
-- `StoreResult`: 서점 조회 한 번의 결과. sealed 타입이다.
+- `Store`, `Condition`, `FetchStatus`(`enums`): 각각 `ALADIN`·`YES24`, `BEST`·`GOOD`·`FAIR`·`POOR`·`UNKNOWN`, 조회 결과 상태 6가지다. 상수 이름은 DB CHECK 제약과 같다.
+- `Offer`(`vo`): 실제로 존재하는 매물 하나. 가격(원, `int`), 배송비(원, `int`), `Condition`, 서점 원문 상태 라벨, 상품 링크를 갖는다. 조회 상태 필드는 없다. 총액은 값을 따로 들지 않고 `price + shippingFee`로 계산한다. 가격과 배송비는 0 이상이어야 하고(0은 허용), 나머지는 비어 있거나 공백일 수 없다. 위반하면 `InvalidOfferException`을 던진다.
+- `StoreResult`(`vo`): 서점 조회 한 번의 결과. sealed 타입이다.
   - `Found(store, offers, latency)`: 상태 `OK`. 매물이 하나 이상 있다.
   - `NotFound(store, status, latency)`: 상태는 `EMPTY`, `TIMEOUT`, `FAILED`, `PARSE_ERROR`, `BLOCKED` 중 하나. 매물이 없다.
   - 둘 다 `status()`를 가진다. 매물은 `OK`일 때만 존재한다는 규칙이 타입으로 표현된다.
+  - 서점과 지연 시간은 비어 있을 수 없고 지연 시간은 0 이상이다(0은 허용). `Found`의 매물은 불변 복사본이다. 위반하면 `InvalidStoreResultException`을 던진다.
+- 규칙 위반 예외는 모두 `DomainException`을 상속한다(ADR-015). `null`도 같은 예외로 통일해, 파서가 값을 읽지 못한 경우를 어댑터가 한 타입으로 잡아 그 행만 건너뛸 수 있게 한다.
 
 ### 포트
 
@@ -45,7 +46,7 @@ ADR-005가 서점별 `StoreAdapter`를 `List<StoreAdapter>`로 병렬 실행하�
 
 - `StoreAdapter`는 `Store store()`와 `List<Offer> fetch(Isbn13)`를 갖는다. 입력은 `Isbn13`만 받는다. `price`는 `book`의 `domain`만 쓸 수 있고(ADR-012), 서점 검색은 ISBN으로 한다.
 - 어댑터는 조회에 성공하면 매물 목록을 돌려준다. 매물이 없으면 빈 목록이다.
-- 실패는 `StoreFetchException`(상태를 담는다)으로 던진다. 어댑터는 `StoreResult`를 만들지 않는다.
+- 실패는 `StoreFetchException`(상태를 담는다)으로 던진다. 어댑터는 `StoreResult`를 만들지 않는다. 이 예외는 응답으로 나가지 않는 내부 신호라 `BusinessException`이나 `DomainException`을 상속하지 않고 `RuntimeException`을 직접 상속한다. 상태는 `TIMEOUT`, `FAILED`, `PARSE_ERROR`, `BLOCKED`만 받으며 `OK`, `EMPTY`, `null`은 `IllegalArgumentException`으로 거부한다.
 - 가격 비교 서비스(B09)가 어댑터 호출을 감싸 `StoreResult`로 바꾼다. 빈 목록은 `NotFound(EMPTY)`, `StoreFetchException`은 그 상태, 타임아웃은 `TIMEOUT`, 그 밖의 예외는 `FAILED`가 된다. 소요 시간도 서비스가 잰다.
 - 서비스는 `List<StoreAdapter>`를 `store()` 기준 `Map`으로 다룬다. 캐시 키 `{isbn13}:{store}`(ADR-007)를 만드는 데도 쓴다.
 

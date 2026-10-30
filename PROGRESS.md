@@ -2,8 +2,8 @@
 
 ## 현재 상태
 
-- 기반 구축 단계. 백엔드 뼈대(Spring Boot 4.1 / Java 25), Flyway 마이그레이션 V1~V3, ADR 11개, 검증 스크립트와 Claude Code 하네스(Hook, Skill, reviewer)가 있다.
-- 도메인 코드는 `Isbn13`(B02)만 있다. 구현은 사용자가 직접 수행한다.
+- 기반 구축 단계. 백엔드 뼈대(Spring Boot 4.1 / Java 25), Flyway 마이그레이션 V1~V3, ADR 15개, 검증 스크립트와 Claude Code 하네스(Hook, Skill, reviewer)가 있다.
+- 도메인 코드는 `book`의 `Isbn13`(B02)과 `price`의 서점 조회 모델·포트(B06)가 있다. 구현은 사용자가 직접 수행한다.
 - 배포 방식은 ADR-010(VM + Docker Compose)으로 확정되어 있다. ADR-008·009는 이미 "대체됨"이다.
 - 기반 구축 완료(F06 제외). 구현 단계로 넘어갈 준비가 됐다.
 - 프론트엔드는 스캐폴딩만 있다(Next.js 16, App Router, TypeScript, pnpm; 화면 없음). `verify.sh`와 CI가 lint·typecheck·build를 검사한다.
@@ -13,6 +13,7 @@
 
 ### 2026-10-30
 
+- B06: `price` 컨텍스트에 `enums`(`Store`, `Condition`, `FetchStatus`), `vo`(`Offer`, `StoreResult` sealed `Found`/`NotFound`), `exception`(`InvalidOfferException`, `InvalidStoreResultException`)과 포트 `StoreAdapter`, `StoreFetchException`을 추가했다. 테스트용 빌더는 `price.fixture`(`OfferBuilder`, `StoreResultBuilder`). ADR-014 채택. 알라딘은 우주점만 조회한다.
 - B02: `book.domain.vo.Isbn13` record 추가. compact 생성자에서 하이픈·공백 제거, ISBN10 → ISBN13 변환, 형식·체크 디지트 검증을 한다. 잘못된 입력은 `InvalidIsbnException`(아래 항목)이며, `INVALID_ISBN` 변환은 B04에서 한다.
 - 도메인 예외 기반 추가(#25): `common.domain.DomainException`을 두고 `Isbn13`이 `book.domain.exception.InvalidIsbnException`을 던지도록 변경했다. 처리되지 않은 `DomainException`은 기존대로 500 `INTERNAL_ERROR`. ADR-015. ADR-014 번호는 B06(StoreAdapter) 작업용으로 비워 뒀다.
 
@@ -34,5 +35,6 @@
 ## 다음 세션에서 할 일
 
 - F06(서지 API 연동 설정)은 API 세부 확정 후 진행한다.
+- B07(알라딘 어댑터): 우주점 페이지를 저장한 HTML로 파서를 테스트하며 시작한다. 이때 라벨이 없는 매물이 있는지(`Offer`는 빈 라벨을 거부한다)와 `condition` 매핑을 확인한다.
 - Dependabot이 올린 PR(#9~#12)을 검토한다. TypeScript 6, @types/node 26은 major라 호환성을 확인한다.
 - 이후 B·FE·D 작업은 `feature_list.json`의 의존성 순서로 직접 구현한다.

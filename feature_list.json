@@ -115,7 +115,7 @@
     "id": "B06",
     "name": "StoreAdapter 인터페이스",
     "description": "StoreAdapter 인터페이스와 공통 모델(가격, 배송비, 상태, 링크, 조회 결과 상태)을 정의한다(ADR-005).",
-    "status": "in_progress",
+    "status": "completed",
     "dependencies": ["F04"]
   },
   {
