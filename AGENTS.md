@@ -65,6 +65,7 @@ clone 후 `scripts/setup-hooks.sh`를 한 번 실행해 `.githooks/`를 활성�
 ## 브랜치와 머지
 
 - `main`에 직접 커밋하지 않는다. 작업마다 `feat/*`, `fix/*`, `chore/*`, `docs/*` 같은 타입별 브랜치를 만들어 PR로 머지한다.
+- 작업마다 `.github/ISSUE_TEMPLATE/`의 템플릿으로 이슈를 함께 만들고, PR 본문의 "관련 작업"에 `Closes #번호`로 연결한다. 브랜치 이름에는 이슈 번호를 넣지 않는다.
 - 머지는 squash merge만 쓴다. PR 제목을 Conventional Commits 형식으로 쓰면 그대로 커밋 메시지가 된다.
 - CI(`.github/workflows/ci.yml`)가 PR과 `main` push마다 `scripts/verify.sh`를 실행한다. 통과해야 머지한다.
 
