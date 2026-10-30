@@ -13,7 +13,8 @@
 
 ### 2026-10-30
 
-- B02: `book.domain.vo.Isbn13` record 추가. compact 생성자에서 하이픈·공백 제거, ISBN10 → ISBN13 변환, 형식·체크 디지트 검증을 한다. 잘못된 입력은 `IllegalArgumentException`이며, `INVALID_ISBN` 변환은 B04에서 한다.
+- B02: `book.domain.vo.Isbn13` record 추가. compact 생성자에서 하이픈·공백 제거, ISBN10 → ISBN13 변환, 형식·체크 디지트 검증을 한다. 잘못된 입력은 `InvalidIsbnException`(아래 항목)이며, `INVALID_ISBN` 변환은 B04에서 한다.
+- 도메인 예외 기반 추가(#25): `common.domain.DomainException`을 두고 `Isbn13`이 `book.domain.exception.InvalidIsbnException`을 던지도록 변경했다. 처리되지 않은 `DomainException`은 기존대로 500 `INTERNAL_ERROR`. ADR-015. ADR-014 번호는 B06(StoreAdapter) 작업용으로 비워 뒀다.
 
 ### 2026-10-29
 
