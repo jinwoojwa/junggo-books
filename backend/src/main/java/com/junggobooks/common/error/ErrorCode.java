@@ -1,7 +1,5 @@
 package com.junggobooks.common.error;
 
-import org.springframework.http.HttpStatus;
-
 /**
  * API 에러 코드. 컨텍스트마다 enum으로 구현하고 응답의 {@code code} 필드로 내려간다.
  *
@@ -12,7 +10,8 @@ public interface ErrorCode {
     /** 응답의 {@code code} 값. 대문자 스네이크 케이스 (예: INVALID_ISBN). */
     String code();
 
-    HttpStatus status();
+    /** 에러 종류. HTTP 상태는 이 값으로 정해진다. */
+    ErrorType type();
 
     /** 예외에 메시지가 따로 없을 때 쓰는 기본 메시지. */
     String defaultMessage();

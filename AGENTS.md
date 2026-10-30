@@ -45,6 +45,7 @@ cd backend
 
 - 모든 에러 응답은 RFC 9457 `ProblemDetail`이고 `code` 확장 필드(대문자 스네이크 케이스 문자열)를 항상 포함한다. 검증 실패는 `errors[]`(field, message)를 더한다.
 - 업무 오류는 `BusinessException(ErrorCode)`로 던진다. 컨텍스트별 코드는 `common.error.ErrorCode`를 구현한 enum으로 정의하고, 한 번 정한 코드 문자열은 바꾸지 않는다.
+- `ErrorCode`는 HTTP 상태 대신 프레임워크와 무관한 `ErrorType`을 갖는다. HTTP 상태로의 변환은 `GlobalExceptionHandler.toStatus` 한 곳에서만 한다.
 - 처리되지 않은 예외는 내부 정보 없이 500 `INTERNAL_ERROR`로 내려간다. 응답 변환은 `GlobalExceptionHandler`가 맡는다.
 
 ## 라벨

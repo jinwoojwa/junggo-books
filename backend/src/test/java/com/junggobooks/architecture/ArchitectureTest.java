@@ -78,6 +78,20 @@ class ArchitectureTest {
                     .allowEmptyShould(true);
 
     @ArchTest
+    static final ArchRule 에러_코드_계약은_스프링을_참조하지_않는다 =
+            noClasses()
+                    .that()
+                    .haveFullyQualifiedName("com.junggobooks.common.error.ErrorCode")
+                    .or()
+                    .haveFullyQualifiedName("com.junggobooks.common.error.ErrorType")
+                    .or()
+                    .haveFullyQualifiedName("com.junggobooks.common.error.BusinessException")
+                    .should()
+                    .dependOnClassesThat()
+                    .resideInAPackage("org.springframework..")
+                    .allowEmptyShould(true);
+
+    @ArchTest
     static final ArchRule common은_컨텍스트를_참조하지_않는다 =
             noClasses()
                     .that()
