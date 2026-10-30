@@ -34,6 +34,7 @@
 | [011](adr/011-java-25-spring-boot-4-1.md) | Java 25와 Spring Boot 4.1을 쓴다 | 채택 |
 | [012](adr/012-hexagonal-package-structure.md) | 패키지는 컨텍스트별 헥사고널 구조로 나누고 ArchUnit으로 강제한다 | 채택 |
 | [013](adr/013-error-code-with-error-type.md) | 에러 코드는 HTTP 상태 대신 ErrorType을 갖는다 | 채택 |
+| [014](adr/014-store-adapter-port-and-result-model.md) | StoreAdapter 포트는 매물 목록을 돌려주고, 조회 결과 상태는 StoreResult로 분리한다 | 제안 |
 | [015](adr/015-domain-exception-base.md) | 도메인 규칙 위반은 DomainException을 상속한 예외로 던진다 | 채택 |
 
 ## 트러블슈팅

@@ -115,13 +115,13 @@
     "id": "B06",
     "name": "StoreAdapter 인터페이스",
     "description": "StoreAdapter 인터페이스와 공통 모델(가격, 배송비, 상태, 링크, 조회 결과 상태)을 정의한다(ADR-005).",
-    "status": "pending",
+    "status": "in_progress",
     "dependencies": ["F04"]
   },
   {
     "id": "B07",
     "name": "알라딘 어댑터",
-    "description": "알라딘 중고와 이 광활한 우주점 조회. 가져오기와 파싱을 분리하고 파서는 저장한 HTML로 테스트한다.",
+    "description": "알라딘 이 광활한 우주점(온라인 구매 가능한 오프라인 매장 재고) 조회. 오프라인 매장 직접 구매 재고는 제외한다(ADR-014). 가져오기와 파싱을 분리하고 파서는 저장한 HTML로 테스트한다.",
     "status": "pending",
     "dependencies": ["B06"]
   },
