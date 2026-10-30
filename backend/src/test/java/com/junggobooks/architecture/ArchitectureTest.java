@@ -86,6 +86,8 @@ class ArchitectureTest {
                     .haveFullyQualifiedName("com.junggobooks.common.error.ErrorType")
                     .or()
                     .haveFullyQualifiedName("com.junggobooks.common.error.BusinessException")
+                    .or()
+                    .haveFullyQualifiedName("com.junggobooks.common.domain.DomainException")
                     .should()
                     .dependOnClassesThat()
                     .resideInAPackage("org.springframework..")

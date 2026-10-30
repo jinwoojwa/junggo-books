@@ -1,5 +1,6 @@
 package com.junggobooks.book.domain.vo;
 
+import com.junggobooks.book.domain.exception.InvalidIsbnException;
 import java.util.Set;
 import java.util.regex.Pattern;
 
@@ -26,7 +27,7 @@ public record Isbn13(String value) {
 
     private static String normalize(String raw) {
         if (raw == null || raw.isBlank()) {
-            throw new IllegalArgumentException("ISBN은 비어 있을 수 없습니다.");
+            throw new InvalidIsbnException("ISBN은 비어 있을 수 없습니다.");
         }
         return raw.replaceAll("[-\\s]", "").toUpperCase();
     }
@@ -68,7 +69,7 @@ public record Isbn13(String value) {
         return (10 - sum % 10) % 10;
     }
 
-    private static IllegalArgumentException invalid(String isbn) {
-        return new IllegalArgumentException("유효하지 않은 ISBN입니다: " + isbn);
+    private static InvalidIsbnException invalid(String isbn) {
+        return new InvalidIsbnException("유효하지 않은 ISBN입니다: " + isbn);
     }
 }

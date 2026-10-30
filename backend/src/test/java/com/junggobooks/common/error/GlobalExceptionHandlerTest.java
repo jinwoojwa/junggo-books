@@ -7,6 +7,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import com.junggobooks.book.domain.exception.InvalidIsbnException;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import org.junit.jupiter.api.BeforeEach;
@@ -93,6 +94,14 @@ class GlobalExceptionHandlerTest {
                 .andExpect(jsonPath("$.detail").value("서버 오류가 발생했습니다."));
     }
 
+    @Test
+    void 변환되지_않은_도메인_예외는_내부_정보_없이_500을_반환한다() throws Exception {
+        mockMvc.perform(get("/domain"))
+                .andExpect(status().isInternalServerError())
+                .andExpect(jsonPath("$.code").value("INTERNAL_ERROR"))
+                .andExpect(jsonPath("$.detail").value("서버 오류가 발생했습니다."));
+    }
+
     @ParameterizedTest
     @CsvSource({
         "VALIDATION, 400",
@@ -146,6 +155,11 @@ class GlobalExceptionHandlerTest {
 
         @GetMapping("/param")
         void param(@RequestParam String isbn) {}
+
+        @GetMapping("/domain")
+        void domain() {
+            throw new InvalidIsbnException("내부 상세 정보");
+        }
 
         @GetMapping("/unexpected")
         void unexpected() {

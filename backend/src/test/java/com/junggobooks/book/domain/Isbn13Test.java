@@ -3,7 +3,9 @@ package com.junggobooks.book.domain;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import com.junggobooks.book.domain.exception.InvalidIsbnException;
 import com.junggobooks.book.domain.vo.Isbn13;
+import com.junggobooks.common.domain.DomainException;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
@@ -96,65 +98,72 @@ class Isbn13Test {
     class 잘못된_입력 {
 
         @Test
+        void 던지는_예외는_도메인_예외이다() {
+            assertThatThrownBy(() -> Isbn13.of("1234567890123"))
+                    .isInstanceOf(DomainException.class)
+                    .isInstanceOf(InvalidIsbnException.class);
+        }
+
+        @Test
         void null이면_예외가_발생한다() {
-            assertThatThrownBy(() -> Isbn13.of(null)).isInstanceOf(IllegalArgumentException.class);
+            assertThatThrownBy(() -> Isbn13.of(null)).isInstanceOf(InvalidIsbnException.class);
         }
 
         @Test
         void 빈_문자열이면_예외가_발생한다() {
-            assertThatThrownBy(() -> Isbn13.of("")).isInstanceOf(IllegalArgumentException.class);
+            assertThatThrownBy(() -> Isbn13.of("")).isInstanceOf(InvalidIsbnException.class);
         }
 
         @Test
         void 공백만_있으면_예외가_발생한다() {
-            assertThatThrownBy(() -> Isbn13.of("   ")).isInstanceOf(IllegalArgumentException.class);
+            assertThatThrownBy(() -> Isbn13.of("   ")).isInstanceOf(InvalidIsbnException.class);
         }
 
         @Test
         void 길이가_10도_13도_아니면_예외가_발생한다() {
             assertThatThrownBy(() -> Isbn13.of("97803064"))
-                    .isInstanceOf(IllegalArgumentException.class);
+                    .isInstanceOf(InvalidIsbnException.class);
             assertThatThrownBy(() -> Isbn13.of("97803064061570"))
-                    .isInstanceOf(IllegalArgumentException.class);
+                    .isInstanceOf(InvalidIsbnException.class);
         }
 
         @Test
         void 숫자가_아닌_문자가_섞여_있으면_예외가_발생한다() {
             assertThatThrownBy(() -> Isbn13.of("97803064061a7"))
-                    .isInstanceOf(IllegalArgumentException.class);
+                    .isInstanceOf(InvalidIsbnException.class);
             assertThatThrownBy(() -> Isbn13.of("03064a6152"))
-                    .isInstanceOf(IllegalArgumentException.class);
+                    .isInstanceOf(InvalidIsbnException.class);
         }
 
         @Test
         void ISBN13의_체크_디지트가_틀리면_예외가_발생한다() {
             assertThatThrownBy(() -> Isbn13.of("9780306406158"))
-                    .isInstanceOf(IllegalArgumentException.class);
+                    .isInstanceOf(InvalidIsbnException.class);
         }
 
         @Test
         void ISBN10의_체크_디지트가_틀리면_예외가_발생한다() {
             assertThatThrownBy(() -> Isbn13.of("0306406159"))
-                    .isInstanceOf(IllegalArgumentException.class);
+                    .isInstanceOf(InvalidIsbnException.class);
         }
 
         @Test
         void ISBN13의_접두어가_978이나_979가_아니면_예외가_발생한다() {
             // 체크 디지트는 맞지만 접두어만 977인 값
             assertThatThrownBy(() -> Isbn13.of("9771234567898"))
-                    .isInstanceOf(IllegalArgumentException.class);
+                    .isInstanceOf(InvalidIsbnException.class);
         }
 
         @Test
         void ISBN13의_마지막_자리가_X이면_예외가_발생한다() {
             assertThatThrownBy(() -> Isbn13.of("978030640615X"))
-                    .isInstanceOf(IllegalArgumentException.class);
+                    .isInstanceOf(InvalidIsbnException.class);
         }
 
         @Test
         void ISBN10의_X가_마지막_자리가_아닌_곳에_있으면_예외가_발생한다() {
             assertThatThrownBy(() -> Isbn13.of("0306X06152"))
-                    .isInstanceOf(IllegalArgumentException.class);
+                    .isInstanceOf(InvalidIsbnException.class);
         }
     }
 
