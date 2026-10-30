@@ -3,13 +3,17 @@
 ## 현재 상태
 
 - 기반 구축 단계. 백엔드 뼈대(Spring Boot 4.1 / Java 25), Flyway 마이그레이션 V1~V3, ADR 11개, 검증 스크립트와 Claude Code 하네스(Hook, Skill, reviewer)가 있다.
-- 도메인·API 코드는 아직 없다(`JunggoBooksApplication`만 존재). 구현은 사용자가 직접 수행한다.
+- 도메인 코드는 `Isbn13`(B02)만 있다. 구현은 사용자가 직접 수행한다.
 - 배포 방식은 ADR-010(VM + Docker Compose)으로 확정되어 있다. ADR-008·009는 이미 "대체됨"이다.
 - 기반 구축 완료(F06 제외). 구현 단계로 넘어갈 준비가 됐다.
 - 프론트엔드는 스캐폴딩만 있다(Next.js 16, App Router, TypeScript, pnpm; 화면 없음). `verify.sh`와 CI가 lint·typecheck·build를 검사한다.
 - CI(GitHub Actions)가 동작하고 main은 PR + squash merge + `verify` 통과로 보호된다. 포맷은 Spotless(google-java-format AOSP)로 검사한다.
 
 ## 세션 로그
+
+### 2026-10-30
+
+- B02: `book.domain.vo.Isbn13` record 추가. compact 생성자에서 하이픈·공백 제거, ISBN10 → ISBN13 변환, 형식·체크 디지트 검증을 한다. 잘못된 입력은 `IllegalArgumentException`이며, `INVALID_ISBN` 변환은 B04에서 한다.
 
 ### 2026-10-29
 

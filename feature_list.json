@@ -87,7 +87,7 @@
     "id": "B02",
     "name": "ISBN 유틸",
     "description": "ISBN 검증과 ISBN10 → ISBN13 변환(ADR-003).",
-    "status": "pending",
+    "status": "completed",
     "dependencies": []
   },
   {
